@@ -13,7 +13,10 @@ const chunk = require(`lodash/chunk`)
  */
 exports.createPages = async gatsbyUtilities => {
   // Query our posts from the GraphQL server
-  const posts = await getPosts(gatsbyUtilities)
+  const { allWpPost, allWpPage } = await getData(gatsbyUtilities)
+
+  const posts = allWpPost.edges
+  const pages = allWpPage.edges
 
   // If there are no posts in WordPress, don't do anything
   if (!posts.length) {
@@ -25,6 +28,14 @@ exports.createPages = async gatsbyUtilities => {
 
   // And a paginated archive
   await createBlogPostArchive({ posts, gatsbyUtilities })
+
+  await createWpPages({ pages, gatsbyUtilities })
+}
+
+const createWpPages = async ({ pages, gatsbyUtilities }) => {
+  pages.map((page) => {
+    console.log (page.node.title)
+  });
 }
 
 /**
@@ -129,9 +140,9 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
  * We're passing in the utilities we got from createPages.
  * So see https://www.gatsbyjs.com/docs/node-apis/#createPages for more info!
  */
-async function getPosts({ graphql, reporter }) {
+async function getData({ graphql, reporter }) {
   const graphqlResult = await graphql(/* GraphQL */ `
-    query WpPosts {
+    query Data {
       # Query all WordPress blog posts sorted by date
       allWpPost(sort: { fields: [date], order: DESC }) {
         edges {
@@ -151,6 +162,20 @@ async function getPosts({ graphql, reporter }) {
           }
         }
       }
+      allWpPage {
+        edges {
+          node {
+            title
+            author {
+              node {
+                name
+              }
+            }
+            slug
+            date(locale: "")
+          }
+        }
+      }
     }
   `)
 
@@ -162,5 +187,5 @@ async function getPosts({ graphql, reporter }) {
     return
   }
 
-  return graphqlResult.data.allWpPost.edges
+  return graphqlResult.data
 }
