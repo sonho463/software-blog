@@ -33,9 +33,19 @@ exports.createPages = async gatsbyUtilities => {
 }
 
 const createWpPages = async ({ pages, gatsbyUtilities }) => {
-  pages.map((page) => {
-    console.log (page.node.title)
-  });
+  Promise.all(
+    pages.map(page => {
+      if (page.node.status === 'publish') {
+        gatsbyUtilities.actions.createPage({
+          path: page.node.uri,
+          component: path.resolve(`./src/templates/page.js`),
+          context: {
+            id: page.node.id,
+          },
+        })
+      }
+    })
+  )
 }
 
 /**
@@ -165,14 +175,11 @@ async function getData({ graphql, reporter }) {
       allWpPage {
         edges {
           node {
-            title
-            author {
-              node {
-                name
-              }
-            }
+            id
             slug
-            date(locale: "")
+            status
+            title
+            uri
           }
         }
       }
