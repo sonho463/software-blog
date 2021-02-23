@@ -176,9 +176,7 @@ async function getData({ graphql, reporter }) {
         edges {
           node {
             id
-            slug
             status
-            title
             uri
           }
         }

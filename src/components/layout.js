@@ -21,7 +21,7 @@ const Layout = ({ isHomePage, children }) => {
 
   return (
     <>
-      <Menu />
+      <Menu width={470}/>
       <div className="global-wrapper" data-is-root-path={isHomePage}>
         <header className="global-header">
           {isHomePage ? (
