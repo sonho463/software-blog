@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql, useStaticQuery, Link } from 'gatsby';
 import { slide as Animation } from 'react-burger-menu';
 
-const Menu = (props) => {
+const Menu = props => {
   const data = useStaticQuery(graphql`
     {
       allWpPage(sort: { fields: [menuOrder], order: ASC }) {
@@ -12,6 +12,11 @@ const Menu = (props) => {
             title
             uri
             menuOrder
+            ancestors {
+              nodes {
+                slug
+              }
+            }
           }
         }
       }
@@ -23,7 +28,9 @@ const Menu = (props) => {
       {data.allWpPage.edges.map(edge =>
         edge.node.status === 'publish' ? (
           <Link to={edge.node.uri} className="menu-item" key={edge.node.uri}>
-            {edge.node.title}
+            {edge.node.ancestors === null
+              ? edge.node.title
+              : '　' + edge.node.title}
           </Link>
         ) : null
       )}
