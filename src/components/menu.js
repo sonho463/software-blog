@@ -1,6 +1,16 @@
 import React from 'react';
 import { graphql, useStaticQuery, Link } from 'gatsby';
 import { slide as Animation } from 'react-burger-menu';
+import styled from 'styled-components';
+
+const FirstLevel = styled.div`
+  font-weight: bold;
+`;
+
+const SecondLevel = styled.div`
+  font-size: 0.9em;
+  margin-left: 1em;
+`;
 
 const Menu = props => {
   const data = useStaticQuery(graphql`
@@ -29,8 +39,8 @@ const Menu = props => {
         edge.node.status === 'publish' ? (
           <Link to={edge.node.uri} className="menu-item" key={edge.node.uri}>
             {edge.node.ancestors === null
-              ? edge.node.title
-              : '　' + edge.node.title}
+              ? <FirstLevel>{edge.node.title}</FirstLevel>
+              : <SecondLevel>{edge.node.title}</SecondLevel>}
           </Link>
         ) : null
       )}
