@@ -2,7 +2,7 @@ import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import parse from "html-react-parser"
 import Menu from "./menu"
-import TagCloud from '../components/tag-cloud';
+import TagCloud from './TagCloud';
 
 const Layout = ({ isHomePage, children }) => {
   const {
