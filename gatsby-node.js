@@ -1,5 +1,5 @@
-const path = require(`path`)
-const chunk = require(`lodash/chunk`)
+const path = require(`path`);
+const chunk = require(`lodash/chunk`);
 
 // This is a simple debugging tool
 // dd() will prettily dump to the terminal and kill the process
@@ -13,24 +13,29 @@ const chunk = require(`lodash/chunk`)
  */
 exports.createPages = async gatsbyUtilities => {
   // Query our posts from the GraphQL server
-  const { allWpPost, allWpPage } = await getData(gatsbyUtilities)
+  const { allWpPost, allWpPage, allWpTag } = await getData(gatsbyUtilities);
 
-  const posts = allWpPost.edges
-  const pages = allWpPage.edges
+  const posts = allWpPost.edges;
+  const pages = allWpPage.edges;
+  const tags = allWpTag.edges;
 
   // If there are no posts in WordPress, don't do anything
   if (!posts.length) {
-    return
+    return;
   }
 
   // If there are posts, create pages for them
-  await createIndividualBlogPostPages({ posts, gatsbyUtilities })
+  await createIndividualBlogPostPages({ posts, gatsbyUtilities });
 
   // And a paginated archive
-  await createBlogPostArchive({ posts, gatsbyUtilities })
+  await createBlogPostArchive({ posts, gatsbyUtilities });
 
-  await createWpPages({ pages, gatsbyUtilities })
-}
+  await createWpPages({ pages, gatsbyUtilities });
+
+  if (tags.length > 0) {
+    await createTagPages({ tags, gatsbyUtilities });
+  }
+};
 
 const createWpPages = async ({ pages, gatsbyUtilities }) => {
   Promise.all(
@@ -42,11 +47,28 @@ const createWpPages = async ({ pages, gatsbyUtilities }) => {
           context: {
             id: page.node.id,
           },
-        })
+        });
       }
     })
-  )
-}
+  );
+};
+
+const createTagPages = async ({ tags, gatsbyUtilities }) => {
+  Promise.all(
+    tags.map(tag => {
+      if (tag.node.count !== null) {
+        gatsbyUtilities.actions.createPage({
+          path: tag.node.uri,
+          component: path.resolve(`./src/templates/tag.js`),
+          context: {
+            id: tag.node.id,
+          },
+        });
+      }
+    })
+  );
+};
+
 
 /**
  * This function creates all the individual blog pages in this site
@@ -78,7 +100,7 @@ const createIndividualBlogPostPages = async ({ posts, gatsbyUtilities }) =>
         },
       })
     )
-  )
+  );
 
 /**
  * This function creates all the individual blog pages in this site
@@ -92,16 +114,16 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
         }
       }
     }
-  `)
+  `);
 
-  const { postsPerPage } = graphqlResult.data.wp.readingSettings
+  const { postsPerPage } = graphqlResult.data.wp.readingSettings;
 
-  const postsChunkedIntoArchivePages = chunk(posts, postsPerPage)
-  const totalPages = postsChunkedIntoArchivePages.length
+  const postsChunkedIntoArchivePages = chunk(posts, postsPerPage);
+  const totalPages = postsChunkedIntoArchivePages.length;
 
   return Promise.all(
     postsChunkedIntoArchivePages.map(async (_posts, index) => {
-      const pageNumber = index + 1
+      const pageNumber = index + 1;
 
       const getPagePath = page => {
         if (page > 0 && page <= totalPages) {
@@ -109,11 +131,11 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
           // we want the first page to be "/" and any additional pages
           // to be numbered.
           // "/blog/2" for example
-          return page === 1 ? `/` : `/blog/${page}`
+          return page === 1 ? `/` : `/blog/${page}`;
         }
 
-        return null
-      }
+        return null;
+      };
 
       // createPage is an action passed to createPages
       // See https://www.gatsbyjs.com/docs/actions#createPage for more info
@@ -137,9 +159,9 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
           nextPagePath: getPagePath(pageNumber + 1),
           previousPagePath: getPagePath(pageNumber - 1),
         },
-      })
+      });
     })
-  )
+  );
 }
 
 /**
@@ -181,16 +203,25 @@ async function getData({ graphql, reporter }) {
           }
         }
       }
+      allWpTag {
+        edges {
+          node {
+            count
+            id
+            uri
+          }
+        }
+      }
     }
-  `)
+  `);
 
   if (graphqlResult.errors) {
     reporter.panicOnBuild(
       `There was an error loading your blog posts`,
       graphqlResult.errors
-    )
-    return
+    );
+    return;
   }
 
-  return graphqlResult.data
+  return graphqlResult.data;
 }

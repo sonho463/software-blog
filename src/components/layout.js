@@ -2,6 +2,7 @@ import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import parse from "html-react-parser"
 import Menu from "./menu"
+import TagCloud from '../components/tag-cloud';
 
 const Layout = ({ isHomePage, children }) => {
   const {
@@ -35,6 +36,7 @@ const Layout = ({ isHomePage, children }) => {
           )}
         </header>
         <main>{children}</main>
+        <TagCloud />
         <footer>
           © {new Date().getFullYear()}, Built with
           {` `}
