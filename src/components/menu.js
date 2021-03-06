@@ -5,11 +5,17 @@ import styled from 'styled-components';
 
 const FirstLevel = styled.div`
   font-weight: bold;
+  &:hover {
+    background: var(--color-accent);
+  }
 `;
 
 const SecondLevel = styled.div`
   font-size: 0.9em;
   margin-left: 1em;
+  &:hover {
+    background: var(--color-accent);
+  }
 `;
 
 const Menu = props => {
