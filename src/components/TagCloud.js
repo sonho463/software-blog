@@ -8,6 +8,9 @@ const TagCloudWrapper = styled.div`
   border: 1px solid #ddd;
   margin-top: 1em;
   padding: 0.5em;
+  .simple-cloud .tag-cloud-tag {
+    cursor: pointer;
+  }
 `;
 
 const TagCloud = () => {
@@ -39,6 +42,7 @@ const TagCloud = () => {
   return (
     <TagCloudWrapper>
       <ReactTagCould
+        className="simple-cloud"
         minSize={12}
         maxSize={35}
         tags={data}
