@@ -5,6 +5,7 @@ import parse from 'html-react-parser';
 import Bio from '../components/bio';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
+import { Button, ButtonsWrapper } from '../components/Button';
 
 const BlogIndex = ({
   data,
@@ -57,13 +58,15 @@ const BlogIndex = ({
         })}
       </ol>
 
-      {previousPagePath && (
-        <>
-          <Link to={previousPagePath}>Previous page</Link>
-          <br />
-        </>
-      )}
-      {nextPagePath && <Link to={nextPagePath}>Next page</Link>}
+      <ButtonsWrapper>
+        {previousPagePath && (
+          <>
+            <Button to={previousPagePath}>前のページ</Button>
+            <br />
+          </>
+        )}
+        {nextPagePath && <Button to={nextPagePath}>次のページ</Button>}
+      </ButtonsWrapper>
     </Layout>
   );
 };

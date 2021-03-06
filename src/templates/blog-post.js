@@ -1,21 +1,22 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
-import Image from "gatsby-image"
-import parse from "html-react-parser"
+import React from 'react';
+import { graphql } from 'gatsby';
+import Image from 'gatsby-image';
+import parse from 'html-react-parser';
 
 // We're using Gutenberg so we need the block styles
-import "@wordpress/block-library/build-style/style.css"
-import "@wordpress/block-library/build-style/theme.css"
+import '@wordpress/block-library/build-style/style.css';
+import '@wordpress/block-library/build-style/theme.css';
 
-import Bio from "../components/bio"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Bio from '../components/bio';
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+import { Button, ButtonsWrapper } from '../components/Button';
 
 const BlogPostTemplate = ({ data: { previous, next, post } }) => {
   const featuredImage = {
     fluid: post.featuredImage?.node?.localFile?.childImageSharp?.fluid,
     alt: post.featuredImage?.node?.alt || ``,
-  }
+  };
 
   return (
     <Layout>
@@ -53,37 +54,28 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
       </article>
 
       <nav className="blog-post-nav">
-        <ul
-          style={{
-            display: `flex`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
-            listStyle: `none`,
-            padding: 0,
-          }}
-        >
-          <li>
+        <ButtonsWrapper>
+          <div>
             {previous && (
-              <Link to={previous.uri} rel="prev">
-                ← {parse(previous.title)}
-              </Link>
+              <Button to={previous.uri} rel="prev">
+                {parse(previous.title)}
+              </Button>
             )}
-          </li>
-
-          <li>
+          </div>
+          <div>
             {next && (
-              <Link to={next.uri} rel="next">
-                {parse(next.title)} →
-              </Link>
+              <Button to={next.uri} rel="next">
+                {parse(next.title)}
+              </Button>
             )}
-          </li>
-        </ul>
+          </div>
+        </ButtonsWrapper>
       </nav>
     </Layout>
-  )
-}
+  );
+};
 
-export default BlogPostTemplate
+export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostById(
@@ -126,4 +118,4 @@ export const pageQuery = graphql`
       title
     }
   }
-`
+`;
