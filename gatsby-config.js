@@ -7,6 +7,13 @@
  */
 
 module.exports = {
+  siteMetadata: {
+    links: {
+      twitter: 'https://twitter.com/pitang1965',
+      instagram: 'https://www.instagram.com/pitang1965/',
+      linktree: 'https://linktr.ee/pitang1965',
+    },
+  },
   /**
    * Adding plugins to this array adds them to your Gatsby site.
    *
@@ -27,8 +34,7 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         // the only required plugin option for WordPress is the GraphQL url.
-        url:
-          `https://software.pitang1965.com/graphql`,
+        url: `https://software.pitang1965.com/graphql`,
       },
     },
 
@@ -77,4 +83,4 @@ module.exports = {
      */
     // `gatsby-plugin-offline`,
   ],
-}
+};
