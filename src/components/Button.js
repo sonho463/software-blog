@@ -11,7 +11,7 @@ export const Button = styled(StyledLink)`
   color: black;
   text-decoration: none;
   text-align: center;
-  border: 2px solid black;
+  border: 1px solid #ddd;
   &:hover {
     background: var(--color-accent);
   }
