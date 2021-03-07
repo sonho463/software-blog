@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const FirstLevel = styled.div`
   font-weight: bold;
+  color: black;
   &:hover {
     background: var(--color-accent);
   }
@@ -13,6 +14,7 @@ const FirstLevel = styled.div`
 const SecondLevel = styled.div`
   font-size: 0.9em;
   margin-left: 1em;
+  color: black;
   &:hover {
     background: var(--color-accent);
   }
