@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, graphql } from 'gatsby';
+import Image from 'gatsby-image';
 import parse from 'html-react-parser';
 
 import Bio from '../components/bio';
@@ -9,7 +10,7 @@ import SEO from '../components/seo';
 const TagTemplate = ({ data }) => {
   const posts = data.wpTag.posts.nodes;
   const tagName = data.wpTag.name;
-  
+
   return (
     <Layout isHomePage>
       <SEO title={tagName} />
@@ -18,6 +19,10 @@ const TagTemplate = ({ data }) => {
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
           const title = post.title;
+          const featuredImage = {
+            fixed: post.featuredImage?.node?.localFile?.childImageSharp?.fixed,
+            alt: post.featuredImage?.node?.altText || ``,
+          };
 
           return (
             <li key={post.uri}>
@@ -26,7 +31,7 @@ const TagTemplate = ({ data }) => {
                 itemScope
                 itemType="http://schema.org/Article"
               >
-                <header>
+                <header className="post-header">
                   <h2>
                     <Link to={post.uri} itemProp="url">
                       <span itemProp="headline">{parse(title)}</span>
@@ -34,7 +39,17 @@ const TagTemplate = ({ data }) => {
                   </h2>
                   <small>{post.date}</small>
                 </header>
-                <section itemProp="description">{parse(post.excerpt)}</section>
+                {featuredImage?.fixed && (
+                  <Image
+                    className="post-image"
+                    fixed={featuredImage.fixed}
+                    alt={featuredImage.alt}
+                    style={{ marginBottom: 50 }}
+                  />
+                )}
+                <section className="post-excerpt" itemProp="description">
+                  {parse(post.excerpt)}
+                </section>
               </article>
             </li>
           );
@@ -57,6 +72,18 @@ export const tagQuery = graphql`
           title
           date(formatString: "YYYY-MM-DD")
           excerpt
+          featuredImage {
+            node {
+              altText
+              localFile {
+                childImageSharp {
+                  fixed(width: 200) {
+                    ...GatsbyImageSharpFixed_withWebp
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
