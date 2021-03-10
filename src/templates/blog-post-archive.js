@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, graphql } from 'gatsby';
+import Image from 'gatsby-image';
 import parse from 'html-react-parser';
 
 import Bio from '../components/bio';
@@ -16,7 +17,7 @@ const BlogIndex = ({
   if (!posts.length) {
     return (
       <Layout isHomePage>
-        <SEO title="All posts" />
+        <SEO title="全投稿" />
         <Bio />
         <p>
           No blog posts found. Add posts to your WordPress site and they'll
@@ -28,13 +29,17 @@ const BlogIndex = ({
 
   return (
     <Layout isHomePage>
-      <SEO title="All posts" />
+      <SEO title="全投稿" />
 
       <Bio />
 
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
           const title = post.title;
+          const featuredImage = {
+            fixed: post.featuredImage?.node?.localFile?.childImageSharp?.fixed,
+            alt: post.featuredImage?.node?.altText || ``,
+          };
 
           return (
             <li key={post.uri}>
@@ -43,7 +48,7 @@ const BlogIndex = ({
                 itemScope
                 itemType="http://schema.org/Article"
               >
-                <header>
+                <header className="post-header">
                   <h2>
                     <Link to={post.uri} itemProp="url">
                       <span itemProp="headline">{parse(title)}</span>
@@ -51,7 +56,17 @@ const BlogIndex = ({
                   </h2>
                   <small>{post.date}</small>
                 </header>
-                <section itemProp="description">{parse(post.excerpt)}</section>
+                {featuredImage?.fixed && (
+                  <Image
+                    className="post-image"
+                    fixed={featuredImage.fixed}
+                    alt={featuredImage.alt}
+                    style={{ marginBottom: 50 }}
+                  />
+                )}
+                <section className="post-excerpt" itemProp="description">
+                  {parse(post.excerpt)}
+                </section>
               </article>
             </li>
           );
@@ -81,11 +96,22 @@ export const pageQuery = graphql`
       skip: $offset
     ) {
       nodes {
-        excerpt
         uri
         date(formatString: "YYYY-MM-DD")
         title
         excerpt
+        featuredImage {
+          node {
+            altText
+            localFile {
+              childImageSharp {
+                fixed(width: 200) {
+                  ...GatsbyImageSharpFixed_withWebp
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
