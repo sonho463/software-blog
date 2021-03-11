@@ -280,6 +280,9 @@ a:focus {
 .post-image {
   grid-area: post-image;
   margin: var(--spacing-2);
+  object-fit: cover;
+  max-width: 200px;
+  max-height: 200px;
 }
 
 .post-excerpt {
