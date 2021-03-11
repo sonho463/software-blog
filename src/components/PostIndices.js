@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import Image from 'gatsby-image';
 import parse from 'html-react-parser';
+import NoImage from '../images/no-image-200x200.png';
 
 const PostIndices = ({ posts }) => (
   <ol style={{ listStyle: `none` }}>
@@ -35,6 +36,7 @@ const PostIndices = ({ posts }) => (
                 style={{ marginBottom: 50 }}
               />
             )}
+            {!!featuredImage?.fixed || <img className="post-image" src={NoImage} alt='No image'/>}
             <section className="post-excerpt" itemProp="description">
               {parse(post.excerpt)}
             </section>
