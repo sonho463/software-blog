@@ -29,14 +29,18 @@ const PostIndices = ({ posts }) => (
               <small>{post.date}</small>
             </header>
             {featuredImage?.fixed && (
-              <Image
-                className="post-image"
-                fixed={featuredImage.fixed}
-                alt={featuredImage.alt}
-                style={{ marginBottom: 50 }}
-              />
+              <Link to={post.uri} itemProp="url">
+                <Image
+                  className="post-image"
+                  fixed={featuredImage.fixed}
+                  alt={featuredImage.alt}
+                  style={{ marginBottom: 50 }}
+                />
+              </Link>
             )}
-            {!!featuredImage?.fixed || <img className="post-image" src={NoImage} alt='No image'/>}
+            {!!featuredImage?.fixed || (
+              <img className="post-image" src={NoImage} alt="Nothing" />
+            )}
             <section className="post-excerpt" itemProp="description">
               {parse(post.excerpt)}
             </section>
