@@ -10,7 +10,16 @@ const TagCloudWrapper = styled.div`
   padding: 0.5em;
   .simple-cloud .tag-cloud-tag {
     cursor: pointer;
+    &:hover {
+      text-shadow: 2px 2px 3px #f4bad3, -2px -2px 3px #ffee7f;
+    }
   }
+`;
+
+const Title = styled.div`
+  font-size: var(--fontSize-3);
+  font-weight: bold;
+  margin-top: var(--spacing-3);
 `;
 
 const TagCloud = () => {
@@ -40,15 +49,18 @@ const TagCloud = () => {
   }));
 
   return (
-    <TagCloudWrapper>
-      <ReactTagCould
-        className="simple-cloud"
-        minSize={12}
-        maxSize={35}
-        tags={data}
-        onClick={tag => navigate(tag.uri)}
-      />
-    </TagCloudWrapper>
+    <>
+      <Title>タグ</Title>
+      <TagCloudWrapper>
+        <ReactTagCould
+          className="simple-cloud"
+          minSize={12}
+          maxSize={35}
+          tags={data}
+          onClick={tag => navigate(tag.uri)}
+        />
+      </TagCloudWrapper>
+    </>
   );
 };
 
