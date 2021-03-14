@@ -5,8 +5,24 @@
  * See: https://www.gatsbyjs.com/docs/use-static-query/
  */
 
-import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import React from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
+import styled from 'styled-components';
+
+const BioWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin: var(--spacing-4);
+
+  img {
+    margin-right: var(--spacing-4);
+    margin-bottom: var(--spacing-0);
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+  }
+`;
 
 const Bio = () => {
   const { author } = useStaticQuery(graphql`
@@ -21,22 +37,16 @@ const Bio = () => {
         }
       }
     }
-  `)
+  `);
 
-  const avatarUrl = author?.avatar?.url
+  const avatarUrl = author?.avatar?.url;
 
   return (
-    <div className="bio">
-      {avatarUrl && (
-        <img
-          alt={author?.firstName || ``}
-          className="bio-avatar"
-          src={avatarUrl}
-        />
-      )}
+    <BioWrapper>
+      {avatarUrl && <img alt={author?.firstName || ``} src={avatarUrl} />}
       {author?.firstName && (
         <p>
-          Written by <strong>{author.firstName}</strong>
+          著者：<strong>{author.firstName}</strong>
           {` `}
           {author?.description || null}
           {` `}
@@ -47,8 +57,8 @@ const Bio = () => {
           )}
         </p>
       )}
-    </div>
-  )
-}
+    </BioWrapper>
+  );
+};
 
-export default Bio
+export default Bio;

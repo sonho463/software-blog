@@ -1,56 +1,51 @@
 import React from 'react';
-import { Link, useStaticQuery, graphql } from 'gatsby';
-import parse from 'html-react-parser';
+import { useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 import Menu from './menu';
-import TagCloud from './TagCloud';
-import { FaTwitter, FaInstagram, FaLink } from 'react-icons/fa';
-import { IconLink } from './IconLink';
+import Header from './Header';
+import Footer from './Footer';
+import SideBar from './SideBar';
 import { GlobalStyles } from 'twin.macro';
 
 const LayoutWrapper = styled.div`
-  width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  padding: var(--spacing-10) var(--spacing-5);
-  @media (min-width: 768px) {
-    max-width: 720px;
+  display: grid;
+  grid-template:
+    '... ...... ...... ......  ...' var(--spacing-5)
+    '... header header header  ...' 
+    '... main   ...... sidebar ...' 1fr
+    '... footer footer footer  ...'
+    '... ...... ...... ......  ...' var(--spacing-5)
+    / minmax(var(--spacing-5), 1fr) minmax(400px, 5fr) var(--spacing-5) 340px minmax(var(--spacing-5), 1fr);
+
+  @media (max-width: 768px) {
+    grid-template:
+      '... ......  ...' var(--spacing-5)
+      '... header  ...'
+      '... main    ...' 1fr
+      '... sidebar ...'
+      '... footer  ...'
+      / var(--spacing-5) 1fr var(--spacing-5);
   }
-  @media (min-width: 992px) {
-    max-width: 960px;
+
+  min-height: 100vh;
+
+  header {
+    grid-area: header;
   }
-  @media (min-width: 1200px) {
-    max-width: 1140px;
+
+  footer {
+    grid-area: footer;
   }
-`;
 
-const GlobalHeader = styled.header`
-  margin-bottom: var(--spacing-12);
-`;
+  main {
+    grid-area: main;
+  }
 
-const MainHeading = styled.div`
-  font-size: var(--fontSize-4);
-  margin: 0;
-  text-align: center;
-
-  @media (min-width: 768px) {
-    font-size: var(--fontSize-7);
+  aside {
+    grid-area: sidebar;
   }
 `;
 
-const HeaderLinkHome = styled.div`
-  display: flex;
-  justify-content: center;
-  font-weight: var(--fontWeight-bold);
-  font-family: var(--font-heading);
-  text-decoration: none;
-  font-size: var(--fontSize-4);
-`;
-
-const FooterWrapper = styled.footer`
-  display: flex;
-  align-items: center;
-`;
 
 const Layout = ({ isHomePage, children }) => {
   const {
@@ -85,42 +80,10 @@ const Layout = ({ isHomePage, children }) => {
       <GlobalStyles />
       <Menu width={410} />
       <LayoutWrapper>
-        <GlobalHeader>
-          {isHomePage ? (
-            <MainHeading>
-              <Link to="/">{parse(title)}</Link>
-            </MainHeading>
-          ) : (
-            <HeaderLinkHome>
-              <Link to="/">{title}</Link>
-            </HeaderLinkHome>
-          )}
-        </GlobalHeader>
+        <Header title={title} isHomePage={isHomePage} />
         <main>{children}</main>
-        <TagCloud />
-        <FooterWrapper>
-          <p>
-            <small>
-              Copyright © {new Date().getFullYear()} pitang1965 All Rights
-              Reserved.
-            </small>
-          </p>
-          <IconLink
-            href={links.twitter}
-            icon={<FaTwitter tw="w-4 h-4 fill-current" />}
-            label="Twitter"
-          />
-          <IconLink
-            href={links.instagram}
-            icon={<FaInstagram tw="w-4 h-4 fill-current" />}
-            label="Instagram"
-          />
-          <IconLink
-            href={links.linktree}
-            icon={<FaLink tw="w-4 h-4 fill-current" />}
-            label="Linktree"
-          />
-        </FooterWrapper>
+        <SideBar />
+        <Footer links={links} />
       </LayoutWrapper>
     </>
   );

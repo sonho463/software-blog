@@ -1,6 +1,5 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Bio from '../components/bio';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import PostIndices from '../components/PostIndices';
@@ -12,7 +11,6 @@ const TagTemplate = ({ data }) => {
   return (
     <Layout isHomePage>
       <SEO title={tagName} />
-      <Bio />
       <h1>{tagName}</h1>
       <PostIndices posts={posts}/>
     </Layout>

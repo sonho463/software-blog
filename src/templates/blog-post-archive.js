@@ -28,7 +28,6 @@ const BlogIndex = ({
   return (
     <Layout isHomePage>
       <SEO title="全投稿" />
-      <Bio />
       <PostIndices posts={posts}/>
       <ButtonsWrapper>
         {previousPagePath && (

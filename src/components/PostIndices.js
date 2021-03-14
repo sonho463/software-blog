@@ -3,6 +3,45 @@ import { Link } from 'gatsby';
 import Image from 'gatsby-image';
 import parse from 'html-react-parser';
 import NoImage from '../images/no-image-200x200.png';
+import styled from 'styled-components';
+
+const PostWrapper = styled.article`
+  display: grid;
+  grid-template:
+    '... ...... ...... ......  ...' var(--spacing-2)
+    '... header header header  ...'
+    '... ...... ...... ......  ...' var(--spacing-2)
+    '... image  ...... excerpt ...' 200px
+    '... ...... ...... ......  ...' var(--spacing-2)
+    / var(--spacing-2) 200px var(--spacing-2) 1fr var(--spacing-2);
+  border: 1px solid #ddd;
+`;
+
+const PostHeader = styled.header`
+  grid-area: header;
+  font-family: var(--font-heading);
+  font-size: var(--fontSize-4);
+  span {
+    color: var(--color-primary);
+  }
+  small {
+    font-size: var(--fontSize-2);
+  }
+`;
+
+const ImageWrapper = styled.div`
+  grid-area: image;
+  img {
+    max-width: 200px;
+    min-width: 200px;
+    max-height: 200px;
+    min-width: 200px;
+  }
+`;
+
+const PostExcerpt = styled.section`
+  grid-area: excerpt;
+`;
 
 const PostIndices = ({ posts }) => (
   <ol style={{ listStyle: `none` }}>
@@ -15,36 +54,36 @@ const PostIndices = ({ posts }) => (
 
       return (
         <li key={post.uri}>
-          <article
-            className="post-list-item"
-            itemScope
-            itemType="http://schema.org/Article"
-          >
-            <header className="post-header">
+          <PostWrapper itemScope itemType="http://schema.org/Article">
+            <PostHeader>
               <h2>
                 <Link to={post.uri} itemProp="url">
                   <span itemProp="headline">{parse(title)}</span>
                 </Link>
               </h2>
               <small>{post.date}</small>
-            </header>
+            </PostHeader>
             {featuredImage?.fixed && (
-              <Link to={post.uri} itemProp="url">
-                <Image
-                  className="post-image"
-                  fixed={featuredImage.fixed}
-                  alt={featuredImage.alt}
-                  style={{ marginBottom: 50 }}
-                />
-              </Link>
+              <ImageWrapper>
+                <Link to={post.uri} itemProp="url">
+                  <Image
+                    className="post-image"
+                    fixed={featuredImage.fixed}
+                    alt={featuredImage.alt}
+                    style={{ marginBottom: 50 }}
+                  />
+                </Link>
+              </ImageWrapper>
             )}
             {!!featuredImage?.fixed || (
-              <img className="post-image" src={NoImage} alt="Nothing" />
+              <ImageWrapper>
+                <img src={NoImage} alt="Nothing" />
+              </ImageWrapper>
             )}
-            <section className="post-excerpt" itemProp="description">
+            <PostExcerpt itemProp="description">
               {parse(post.excerpt)}
-            </section>
-          </article>
+            </PostExcerpt>
+          </PostWrapper>
         </li>
       );
     })}
