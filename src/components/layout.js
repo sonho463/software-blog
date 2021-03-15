@@ -11,7 +11,8 @@ const LayoutWrapper = styled.div`
   display: grid;
   grid-template:
     '... ...... ...... ......  ...' var(--spacing-5)
-    '... header header header  ...' 
+    '... header header header  ...'
+    '... ...... ...... ......  ...' var(--spacing-5)
     '... main   ...... sidebar ...' 1fr
     '... footer footer footer  ...'
     '... ...... ...... ......  ...' var(--spacing-5)
@@ -21,7 +22,9 @@ const LayoutWrapper = styled.div`
     grid-template:
       '... ......  ...' var(--spacing-5)
       '... header  ...'
+      '... ......  ...' var(--spacing-3)
       '... main    ...' 1fr
+      '... ......  ...' var(--spacing-3)
       '... sidebar ...'
       '... footer  ...'
       / var(--spacing-5) 1fr var(--spacing-5);
@@ -74,8 +77,6 @@ const Layout = ({ isHomePage, children }) => {
       }
     }
   `);
-
-  console.log(window.innerWidth);
 
   return (
     <>
