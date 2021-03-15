@@ -75,10 +75,12 @@ const Layout = ({ isHomePage, children }) => {
     }
   `);
 
+  console.log(window.innerWidth);
+
   return (
     <>
       <GlobalStyles />
-      <Menu width={410} />
+      <Menu width={410 < window.innerWidth ?  410 : '80%'} />
       <LayoutWrapper>
         <Header title={title} isHomePage={isHomePage} />
         <main>{children}</main>
