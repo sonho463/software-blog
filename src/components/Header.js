@@ -16,9 +16,7 @@ const Heading = styled.div`
   position: fixed;
   left: 90px;
   height: 60px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 0.5em;
-  box-shadow: 0 0 1em rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(0.1rem);
   z-index: 10;
 
   font-size: var(--fontSize-2);

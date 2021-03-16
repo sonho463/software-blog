@@ -15,7 +15,6 @@ const PostWrapper = styled.article`
     '... ...... ...... ......  ...' var(--spacing-2)
     / var(--spacing-2) 150px var(--spacing-2) 1fr var(--spacing-2);
   border: 1px solid #ddd;
-  overflow: hidden;
 `;
 
 const PostHeader = styled.header`
@@ -42,6 +41,7 @@ const ImageWrapper = styled.div`
 
 const PostExcerpt = styled.section`
   grid-area: excerpt;
+  overflow: hidden;
 `;
 
 const PostIndices = ({ posts }) => (
