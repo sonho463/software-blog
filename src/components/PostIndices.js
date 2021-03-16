@@ -11,10 +11,11 @@ const PostWrapper = styled.article`
     '... ...... ...... ......  ...' var(--spacing-2)
     '... header header header  ...'
     '... ...... ...... ......  ...' var(--spacing-2)
-    '... image  ...... excerpt ...' 200px
+    '... image  ...... excerpt ...' 250px
     '... ...... ...... ......  ...' var(--spacing-2)
-    / var(--spacing-2) 200px var(--spacing-2) 1fr var(--spacing-2);
+    / var(--spacing-2) 150px var(--spacing-2) 1fr var(--spacing-2);
   border: 1px solid #ddd;
+  overflow: hidden;
 `;
 
 const PostHeader = styled.header`
@@ -32,10 +33,10 @@ const PostHeader = styled.header`
 const ImageWrapper = styled.div`
   grid-area: image;
   img {
-    max-width: 200px;
-    min-width: 200px;
-    max-height: 200px;
-    min-width: 200px;
+    max-width: 150px;
+    min-width: 150px;
+    max-height: 150px;
+    min-width: 150px;
   }
 `;
 
