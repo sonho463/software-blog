@@ -1,5 +1,6 @@
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
+import { useWindowDimensions } from '../util/useWindowDimensions';
 import styled from 'styled-components';
 import Menu from './menu';
 import Header from './Header';
@@ -49,7 +50,6 @@ const LayoutWrapper = styled.div`
   }
 `;
 
-
 const Layout = ({ isHomePage, children }) => {
   const {
     site: {
@@ -78,10 +78,12 @@ const Layout = ({ isHomePage, children }) => {
     }
   `);
 
+  const { width } = useWindowDimensions();
+
   return (
     <>
       <GlobalStyles />
-      <Menu width={410 < window.innerWidth ?  410 : '80%'} />
+      <Menu width={410 < width ? 410 : '80%'} />
       <LayoutWrapper>
         <Header title={title} isHomePage={isHomePage} />
         <main>{children}</main>
