@@ -53,6 +53,37 @@ const ImageWrapper = styled.div`
 
 const ContentWrapper = styled.section`
   grid-area: content;
+
+  a {
+    text-decoration: underline;
+  }
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+  }
+  h2 {
+    border-left: 8px solid #999;
+    font-size: var(--fontSize-3);
+    font-weight: var(--fontWeight-semibold);
+    padding: var(--spacing-2) var(--spacing-5);
+    line-height: var(--spacing-7);
+  }
+  h3 {
+    font-size: var(--fontSize-2);
+    padding: 2px 15px;
+    margin-left: 5px;
+    border-left: 2px #999 solid;
+  }
+  h4 {
+    font-size: var(--fontSize-2);
+    padding: 0 12px;
+    border: 0;
+    border-left: solid 12px #999;
+  }
 `;
 
 const ButtonsWrapper = styled.nav`
