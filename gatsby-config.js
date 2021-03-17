@@ -7,6 +7,11 @@
  */
 
 module.exports = {
+  flags: {
+    DEV_SSR: true,
+    QUERY_ON_DEMAND: true,
+    LAZY_IMAGES: true,
+  },
   siteMetadata: {
     links: {
       twitter: 'https://twitter.com/pitang1965',
