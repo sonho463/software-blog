@@ -11,7 +11,7 @@ const PostWrapper = styled.article`
     '... ...... ...... ......  ...' var(--spacing-2)
     '... header header header  ...'
     '... ...... ...... ......  ...' var(--spacing-2)
-    '... image  ...... excerpt ...' 250px
+    '... image  ...... excerpt ...'
     '... ...... ...... ......  ...' var(--spacing-2)
     / var(--spacing-2) 150px var(--spacing-2) 1fr var(--spacing-2);
   border: 1px solid #ddd;

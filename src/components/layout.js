@@ -15,6 +15,7 @@ const LayoutWrapper = styled.div`
     '... header header header  ...'
     '... ...... ...... ......  ...' var(--spacing-5)
     '... main   ...... sidebar ...' 1fr
+    '... ...... ...... ......  ...' var(--spacing-5)
     '... footer footer footer  ...'
     '... ...... ...... ......  ...' var(--spacing-5)
     / minmax(var(--spacing-5), 1fr) minmax(400px, 5fr) var(--spacing-5) 340px minmax(var(--spacing-5), 1fr);
