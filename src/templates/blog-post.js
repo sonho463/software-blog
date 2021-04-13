@@ -8,7 +8,7 @@ import '@wordpress/block-library/build-style/style.css';
 import '@wordpress/block-library/build-style/theme.css';
 
 import Layout from '../components/layout';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import { Button } from '../components/Button';
 import styled from 'styled-components';
 
@@ -122,7 +122,7 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
 
   return (
     <Layout>
-      <SEO title={post.title} description={post.excerpt} />
+      <Seo title={post.title} description={post.excerpt} />
 
       <PostWrapper itemScope itemType="http://schema.org/Article">
         <PostHeader>

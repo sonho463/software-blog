@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Bio from '../components/bio';
 import Layout from '../components/layout';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import PostIndices from '../components/PostIndices';
 import { Button, ButtonsWrapper } from '../components/Button';
 
@@ -15,7 +15,7 @@ const BlogIndex = ({
   if (!posts.length) {
     return (
       <Layout isHomePage>
-        <SEO title="全投稿" />
+        <Seo title="全投稿" />
         <Bio />
         <p>
           No blog posts found. Add posts to your WordPress site and they'll
@@ -27,7 +27,7 @@ const BlogIndex = ({
 
   return (
     <Layout isHomePage>
-      <SEO title="全投稿" />
+      <Seo title="全投稿" />
       <PostIndices posts={posts}/>
       <ButtonsWrapper>
         {previousPagePath && (
