@@ -28,7 +28,7 @@ const BlogIndex = ({
   return (
     <Layout isHomePage>
       <Seo title="全投稿" />
-      <PostIndices posts={posts}/>
+      <PostIndices posts={posts} />
       <ButtonsWrapper>
         {previousPagePath && (
           <>
@@ -61,9 +61,12 @@ export const pageQuery = graphql`
             altText
             localFile {
               childImageSharp {
-                fixed(width: 200) {
-                  ...GatsbyImageSharpFixed_withWebp
-                }
+                gatsbyImageData(
+                  width: 200
+                  layout: FIXED
+                  placeholder: BLURRED
+                  formats: [AUTO, WEBP, AVIF]
+                )
               }
             }
           }

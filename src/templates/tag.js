@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
-import SEO from '../components/seo';
+import Seo from '../components/seo';
 import PostIndices from '../components/PostIndices';
 
 const TagTemplate = ({ data }) => {
@@ -10,9 +10,9 @@ const TagTemplate = ({ data }) => {
 
   return (
     <Layout isHomePage>
-      <SEO title={tagName} />
+      <Seo title={tagName} />
       <h1>{tagName}</h1>
-      <PostIndices posts={posts}/>
+      <PostIndices posts={posts} />
     </Layout>
   );
 };
@@ -35,9 +35,12 @@ export const tagQuery = graphql`
               altText
               localFile {
                 childImageSharp {
-                  fixed(width: 200) {
-                    ...GatsbyImageSharpFixed_withWebp
-                  }
+                  gatsbyImageData(
+                    width: 200
+                    layout: FIXED
+                    placeholder: BLURRED
+                    formats: [AUTO, WEBP, AVIF]
+                  )
                 }
               }
             }

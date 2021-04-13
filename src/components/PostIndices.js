@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import Image from 'gatsby-image';
+import { GatsbyImage, StaticImage } from 'gatsby-plugin-image';
 import parse from 'html-react-parser';
-import NoImage from '../images/no-image-200x200.png';
 import styled from 'styled-components';
+const NO_IMAGE = '../images/no-image-200x200.png';
 
 const PostWrapper = styled.article`
   display: grid;
@@ -49,7 +49,8 @@ const PostIndices = ({ posts }) => (
     {posts.map(post => {
       const title = post.title;
       const featuredImage = {
-        fixed: post.featuredImage?.node?.localFile?.childImageSharp?.fixed,
+        imageData:
+          post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData,
         alt: post.featuredImage?.node?.altText || ``,
       };
 
@@ -64,21 +65,20 @@ const PostIndices = ({ posts }) => (
               </h2>
               <small>{post.date}</small>
             </PostHeader>
-            {featuredImage?.fixed && (
+            {featuredImage?.imageData && (
               <ImageWrapper>
                 <Link to={post.uri} itemProp="url">
-                  <Image
+                  <GatsbyImage
+                    image={featuredImage.imageData}
                     className="post-image"
-                    fixed={featuredImage.fixed}
                     alt={featuredImage.alt}
-                    style={{ marginBottom: 50 }}
                   />
                 </Link>
               </ImageWrapper>
             )}
-            {!!featuredImage?.fixed || (
+            {!!featuredImage?.imageData || (
               <ImageWrapper>
-                <img src={NoImage} alt="Nothing" />
+                <StaticImage src={NO_IMAGE} alt="Nothing" />
               </ImageWrapper>
             )}
             <PostExcerpt itemProp="description">

@@ -65,9 +65,12 @@ export const pageQuery = graphql`
         node {
           localFile {
             childImageSharp {
-              fluid(quality: 100, maxWidth: 4000) {
-                ...GatsbyImageSharpFluid_withWebp
-              }
+              gatsbyImageData(
+                quality: 80
+                layout: CONSTRAINED
+                placeholder: BLURRED
+                formats: [AUTO, WEBP, AVIF]
+              )
             }
           }
         }

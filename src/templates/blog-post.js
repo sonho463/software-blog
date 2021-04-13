@@ -1,6 +1,6 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Image from 'gatsby-image';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import parse from 'html-react-parser';
 
 // We're using Gutenberg so we need the block styles
@@ -116,7 +116,8 @@ const ButtonsWrapper = styled.nav`
 
 const BlogPostTemplate = ({ data: { previous, next, post } }) => {
   const featuredImage = {
-    fluid: post.featuredImage?.node?.localFile?.childImageSharp?.fluid,
+    imageData:
+      post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData,
     alt: post.featuredImage?.node?.altText || ``,
   };
 
@@ -132,12 +133,11 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
           <small>{post.date}</small>
         </PostHeader>
         {/* if we have a featured image for this post let's display it */}
-        {featuredImage?.fluid && (
+        {featuredImage?.imageData && (
           <ImageWrapper>
-            <Image
-              fluid={featuredImage.fluid}
+            <GatsbyImage
+              image={featuredImage.imageData}
               alt={featuredImage.alt}
-              style={{ marginBottom: 50 }}
             />
           </ImageWrapper>
         )}
@@ -168,40 +168,36 @@ export default BlogPostTemplate;
 
 export const pageQuery = graphql`
   query BlogPostById(
-    # these variables are passed in via createPage.pageContext in gatsby-node.js
     $id: String!
     $previousPostId: String
     $nextPostId: String
   ) {
-    # selecting the current post by id
     post: wpPost(id: { eq: $id }) {
       id
       excerpt
       content
       title
       date(formatString: "YYYY-MM-DD")
-
       featuredImage {
         node {
           altText
           localFile {
             childImageSharp {
-              fluid(maxWidth: 1000, quality: 100) {
-                ...GatsbyImageSharpFluid
-              }
+              gatsbyImageData(
+                quality: 80
+                layout: CONSTRAINED
+                placeholder: BLURRED
+                formats: [AUTO, WEBP, AVIF]
+              )
             }
           }
         }
       }
     }
-
-    # this gets us the previous post by id (if it exists)
     previous: wpPost(id: { eq: $previousPostId }) {
       uri
       title
     }
-
-    # this gets us the next post by id (if it exists)
     next: wpPost(id: { eq: $nextPostId }) {
       uri
       title
