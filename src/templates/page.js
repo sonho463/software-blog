@@ -69,7 +69,7 @@ export const pageQuery = graphql`
                 quality: 80
                 layout: CONSTRAINED
                 placeholder: BLURRED
-                formats: [AUTO, WEBP, AVIF]
+                formats: [AUTO, WEBP]
               )
             }
           }
